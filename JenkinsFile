@@ -41,40 +41,31 @@ platforms.each {
 
 parallel tasks
 
+/////////////////
+/// FUNCTIONS ///
+/////////////////
 
 def buildPlatform( String platform ) {
-  
-  def node_labels = getNodeLabels( platform );
-  
-  echo "Node labels: ${node_labels}";
-
-  node( node_labels ) {
+    node( getNodeLabels( platform ) ) {
       
     env.WORKSPACE = getWorkspace();
     env.PROJECT_FOLDER = new File(env.WORKSPACE, "Gloomy").toString();
     
-    def platform_serial = getPlatformSerial( platform );
-    def platform_build_target = getPlatformBuildTarget( platform );
-    
-    echo "${platform}: ${platform_serial}, ${platform_build_target}";
+    def platform_serial = ;
     
     stage('Checkout ' + platform) {
-        sendMessageToSlack("Build started", platform, "#0000FF")
-
+        sendMessageToSlack("Build started", platform, "#0000FF");
         checkout scm
-
-        env.commit = commitSha.get();
-        
-        echo "${env.commit}";
     }
     
     try {
-        
-        echo "Gloomy/Assets/UI/Scripts/CommitSHA.cs";
-        
         commitSha.writeToCsFile( "Gloomy/Assets/UI/Scripts/CommitSHA.cs" );
-        
-        
+
+        def base_arguments = '"silent-crashes", "accept-apiupdate", "buildTarget ${getPlatformBuildTarget( platform )}"';
+        echo "${base_arguments}"
+
+        String unity_install_path = activateUnityLicense( getPlatformSerial( platform ), platform, base_arguments )
+
     } catch (Exception err) {
         sendMessageToSlack("Failed to process", platform, "danger", "Reason : " + err.toString())
 
