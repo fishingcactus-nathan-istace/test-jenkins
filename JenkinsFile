@@ -70,9 +70,9 @@ def buildPlatform( String platform ) {
     
     try {
         
-        echo "${new File( env.PROJECT_FOLDER, 'Assets/UI/Scripts/CommitSHA.cs' ).toString()}";
+        echo "Assets/UI/Scripts/CommitSHA.cs";
         
-        commitSha.writeToCsFile( new File( env.PROJECT_FOLDER, "Assets/UI/Scripts/CommitSHA.cs" ).toString() );
+        commitSha.writeToCsFile( "Assets/UI/Scripts/CommitSHA.cs" );
         
         
     } catch (Exception err) {
