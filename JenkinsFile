@@ -59,10 +59,10 @@ def buildPlatform( String platform ) {
     try {
         commitSha.writeToCsFile( "Gloomy/Assets/UI/Scripts/CommitSHA.cs" );
 
-        def base_arguments = '"silent-crashes", "accept-apiupdate", "buildTarget ${getPlatformBuildTarget( platform )}"';
+        def base_arguments = "\"silent-crashes\", \"accept-apiupdate\", \"buildTarget ${getPlatformBuildTarget( platform )}\"";
         echo "${base_arguments}"
 
-        String unity_install_path = activateUnityLicense( getPlatformSerial( platform ), platform, base_arguments )
+        String unity_install_path = unityPosh.activateLicense( getPlatformSerial( platform ), platform, base_arguments )
 
     } catch (Exception err) {
         sendMessageToSlack("Failed to process", platform, "danger", "Reason : " + err.toString())
