@@ -51,8 +51,6 @@ def buildPlatform( String platform ) {
     env.WORKSPACE = getWorkspace();
     env.PROJECT_FOLDER = new File(env.WORKSPACE, "Gloomy").toString();
     
-    def platform_serial = ;
-    
     stage('Checkout ' + platform) {
         sendMessageToSlack("Build started", platform, "#0000FF");
         checkout scm
