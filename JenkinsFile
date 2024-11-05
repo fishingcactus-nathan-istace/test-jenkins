@@ -70,9 +70,9 @@ def buildPlatform( String platform ) {
     
     try {
         
-        echo "Assets/UI/Scripts/CommitSHA.cs";
+        echo "Gloomy/Assets/UI/Scripts/CommitSHA.cs";
         
-        commitSha.writeToCsFile( "Assets/UI/Scripts/CommitSHA.cs" );
+        commitSha.writeToCsFile( "Gloomy/Assets/UI/Scripts/CommitSHA.cs" );
         
         
     } catch (Exception err) {
