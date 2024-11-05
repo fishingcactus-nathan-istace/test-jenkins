@@ -62,7 +62,7 @@ def buildPlatform( String platform ) {
         def base_arguments = "\"silent-crashes\", \"accept-apiupdate\", \"buildTarget ${getPlatformBuildTarget( platform )}\"";
         echo "${base_arguments}"
 
-        String unity_install_path = unityPosh.activateLicense( getPlatformSerial( platform ), platform, base_arguments )
+        String unity_install_path = unityPosh.activateLicense( getPlatformSerial( platform ), platform, "Gloomy", base_arguments )
 
     } catch (Exception err) {
         sendMessageToSlack("Failed to process", platform, "danger", "Reason : " + err.toString())
