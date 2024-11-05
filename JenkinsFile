@@ -61,7 +61,7 @@ def buildPlatform( String platform ) {
     stage('Checkout ' + platform) {
         sendMessageToSlack("Build started", platform, "#0000FF")
 
-        //checkout scm
+        checkout scm
 
         env.commit = commitSha.get();
         
