@@ -1,0 +1,96 @@
+@Library('jenkins-utils@master')
+@Library("fc-unity")
+
+import org.emidee.jenkins.DeploymentEnvironment
+import org.emidee.jenkins.Environment
+import groovy.transform.Field
+
+properties([
+    parameters([
+        string(name: "ROOT_BUILD_DIRECTORY", defaultValue: "C:\\UnityBuilds", trim: true),
+        string(name: "ROOT_ARCHIVE_DIRECTORY", defaultValue: "\\\\fishingnas\\Versions\\Nightly", trim: true),
+        string(name: "TOOLS_NAS_DIRECTORY", defaultValue: "\\\\fishingnas\\Tools", trim: true),
+        string(name: "STEAM_ARCHIVE_DIRECTORY", defaultValue: "D:\\steambuilds\\gloomy", trim: true),
+        booleanParam(name: "BUILD_WIN64", defaultValue: true),
+        booleanParam(name: "BUILD_PS5", defaultValue: false),
+        booleanParam(name: "BUILD_STEAM", defaultValue: false),
+        booleanParam(name: "BUILD_ANDROID", defaultValue: false),
+    ])
+])
+
+
+def platforms = []
+def tasks = [:]
+
+if ( params.BUILD_WIN64 )   { platforms << 'Win64'   } 
+if ( params.BUILD_PS5 )     { platforms << 'PS5'     } 
+if ( params.BUILD_STEAM )   { platforms << 'Steam'   }
+if ( params.BUILD_ANDROID ) { platforms << 'Android' }
+
+
+/*
+Each platform will be built in parallel. Parallelize accross all the slaves
+Better parallelize each platform than each pull request, to save time when only
+a few jobs are running
+*/
+platforms.each {
+    tasks[it] = {
+        buildPlatform( it )
+    }
+}
+
+parallel tasks
+
+
+def buildPlatform( String platform ) {
+  
+  def node_labels = getNodeLabels( platform );
+  
+  echo "Node labels: ${node_labels}";
+
+  node( node_labels ) {
+      
+    env.WORKSPACE = getWorkspace();
+    env.PROJECT_FOLDER = new File(env.WORKSPACE, "Gloomy").toString();
+    
+    def platform_serial = getPlatformSerial( platform );
+    def platform_build_target = getPlatformBuildTarget( platform );
+    
+    echo "${platform}: ${platform_serial}, ${platform_build_target}";
+    
+    stage('Checkout ' + platform) {
+        sendMessageToSlack("Build started", platform, "#0000FF")
+
+        //checkout scm
+
+        env.commit = commitSha.get();
+        
+        echo "${env.commit}";
+    }
+    
+    try {
+        
+        echo "${new File( env.PROJECT_FOLDER, 'Assets/UI/Scripts/CommitSHA.cs' ).toString()}";
+        
+        commitSha.writeToCsFile( new File( env.PROJECT_FOLDER, "Assets/UI/Scripts/CommitSHA.cs" ).toString() );
+        
+        
+    } catch (Exception err) {
+        sendMessageToSlack("Failed to process", platform, "danger", "Reason : " + err.toString())
+
+        error "Failed to process " + platform + " : " + err.toString()
+    }
+    
+  }
+}
+
+def sendMessageToSlack(String message, String platform, String color, String suffix = "") {
+
+    String full_message = message + " : #${env.BUILD_NUMBER} - ${env.JOB_NAME} - ${env.BRANCH_NAME} - " + platform + " On ${env.NODE_NAME} (<${env.BUILD_URL}|Open>)"
+
+    if (!(suffix?.trim())) {
+        full_message += " " + suffix
+    }
+
+    echo "SLACK: ${full_message}"
+}
