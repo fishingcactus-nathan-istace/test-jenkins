@@ -1,3 +1,3 @@
 public class CommitSha {
-  public static string commitSha = "<commit-sha>";
+  public static string commitSha = "commitsha";
 }
