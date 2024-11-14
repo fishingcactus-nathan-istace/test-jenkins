@@ -3,7 +3,12 @@
 // THIS FILE WAS AUTO-GENERATED. DO NOT MODIFY LOCALLY BUT INSTEAD UPDATE THE PACKAGE com.fishingcactus.jenkins
 //
 
+echo "test"
+
 @Library('jenkins-utils@master')
+
+
+echo "test2"
 
 def can_abort_previous_builds = true
 
