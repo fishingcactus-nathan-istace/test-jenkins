@@ -40,13 +40,23 @@ stage('Check parameters') {
     }
 }
 
+// :TODO: this can be gathered using Environment.instance.PROJECT_NAME after the initialization
 env.PROJECT_NAME = "Test"
 
 initializeEnvironment(this, env.PROJECT_NAME)
 
 env.WORKSPACE = getWorkspace()
+
+echo env.WORKSPACE
+
 env.PROJECT_PATH = new URI(env.WORKSPACE, ["UnityProject"].join("/")).normalize().toString()
+
+echo env.PROJECT_PATH
+
 env.BUILD_SCRIPT_DIRECTORY_PATH = new URI([env.PROJECT_PATH, "../BuildScripts"].join("/")).normalize().toString() 
+
+echo env.BUILD_SCRIPT_DIRECTORY_PATH
+
 env.BRANCH_TYPE = getBranchType(env.BRANCH_NAME)
 env.DEPLOYMENT_ENVIRONMENT = getBranchDeploymentEnvironment(env.BRANCH_TYPE)
 env.CLIENT_CONFIG = getClientConfig(env.DEPLOYMENT_ENVIRONMENT)
@@ -443,6 +453,7 @@ def removeFromBuilder() {
 }
 
 def getBuildScript(String name) {
+	echo new File(env.BUILD_SCRIPT_DIRECTORY_PATH, name).toString()
     return new File(env.BUILD_SCRIPT_DIRECTORY_PATH, name).toString()
 }
 
