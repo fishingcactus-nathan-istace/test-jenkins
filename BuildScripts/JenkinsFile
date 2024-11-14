@@ -47,15 +47,15 @@ initializeEnvironment(this, env.PROJECT_NAME)
 
 env.WORKSPACE = getWorkspace()
 
-echo env.WORKSPACE
+echo "${env.WORKSPACE}"
 
 env.PROJECT_PATH = new URI(env.WORKSPACE, ["UnityProject"].join("/")).normalize().toString()
 
-echo env.PROJECT_PATH
+echo "${env.PROJECT_PATH}"
 
 env.BUILD_SCRIPT_DIRECTORY_PATH = new URI([env.PROJECT_PATH, "../BuildScripts"].join("/")).normalize().toString() 
 
-echo env.BUILD_SCRIPT_DIRECTORY_PATH
+echo "${env.BUILD_SCRIPT_DIRECTORY_PATH}"
 
 env.BRANCH_TYPE = getBranchType(env.BRANCH_NAME)
 env.DEPLOYMENT_ENVIRONMENT = getBranchDeploymentEnvironment(env.BRANCH_TYPE)
