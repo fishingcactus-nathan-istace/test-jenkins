@@ -455,7 +455,7 @@ def getBuildScript(String name) {
 def getProjectFolder() {
     echo env.WORKSPACE
     echo env.WS_PROJECT_RELATIVE_PATH
-    echo new File(env.WORKSPACE, env.WS_PROJECT_RELATIVE_PATH).ToString()
+    echo new File(env.WORKSPACE, env.WS_PROJECT_RELATIVE_PATH).toString()
     echo new File(env.WORKSPACE, env.WS_PROJECT_RELATIVE_PATH)
     return new File(env.WORKSPACE, env.WS_PROJECT_RELATIVE_PATH)
 }
