@@ -129,6 +129,9 @@ def buildPlatform(String platform, def platform_serials ) {
                 }
                 
                 String unity_install_path = activateUnityLicense( serial, base_arguments )
+
+echo unity_install_path 
+
                 buildCookRun( platform, env.BUILD_FOLDER, unity_install_path, base_arguments )
                 archiveBuild( platform, env.BUILD_FOLDER )
 
