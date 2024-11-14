@@ -102,11 +102,11 @@ def buildPlatform(String platform, def platform_serials ) {
 	
 	echo "${env.WORKSPACE}"
 	
-	env.PROJECT_PATH = new URI([env.WORKSPACE, "UnityProject"].join("/")).normalize().toString()
+	env.PROJECT_PATH = new URI(["${env.WORKSPACE}", "UnityProject"].join("/")).normalize().toString()
 	
 	echo "${env.PROJECT_PATH}"
 	
-	env.BUILD_SCRIPT_DIRECTORY_PATH = new URI([env.PROJECT_PATH, "../BuildScripts"].join("/")).normalize().toString() 
+	env.BUILD_SCRIPT_DIRECTORY_PATH = new URI(["${env.PROJECT_PATH}", "../BuildScripts"].join("/")).normalize().toString() 
 	
 	echo "${env.BUILD_SCRIPT_DIRECTORY_PATH}"
 
