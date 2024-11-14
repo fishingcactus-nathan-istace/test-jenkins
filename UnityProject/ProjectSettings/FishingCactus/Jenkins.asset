@@ -15,7 +15,7 @@ MonoBehaviour:
   ProjectName: Test
   SlackChannel: p_gloomy_ci
   ArchiveDirectory: \\fishingnas\Versions
-  ScriptsDirectory: BuildScripts
+  ScriptsDirectory: ../BuildScripts
   WorkspaceProjectRelativePath: UnityProject
   Amazon:
     UploadToS3: 0
