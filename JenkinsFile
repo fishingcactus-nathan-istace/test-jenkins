@@ -19,6 +19,7 @@ properties([
 ])
 
 def platforms = getBuildPlatformsFromParams();
+def tasls = [:]
 
 platforms.each {
     tasks[it] = {
