@@ -3,12 +3,8 @@
 // THIS FILE WAS AUTO-GENERATED. DO NOT MODIFY LOCALLY BUT INSTEAD UPDATE THE PACKAGE com.fishingcactus.jenkins
 //
 
-echo "test"
 
 @Library('jenkins-utils@master') _
-
-
-echo "test2"
 
 def can_abort_previous_builds = true
 
@@ -33,6 +29,8 @@ properties([
     buildDiscarder(logRotator(numToKeepStr: '1')),
     
 ])
+
+echo "test"
 
 stage('Check parameters') {
     try {
