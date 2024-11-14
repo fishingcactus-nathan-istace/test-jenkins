@@ -9,7 +9,7 @@ def can_abort_previous_builds = true
 
 if ( can_abort_previous_builds ) {
     // If the job to run targets a branch which is already being built, cancel the already running job
-    abortPreviousRunningBuilds()
+    // abortPreviousRunningBuilds()
 }
 
 // Expose some properties in the UI of jenkins when we run the job manually
