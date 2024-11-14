@@ -45,18 +45,6 @@ env.PROJECT_NAME = "Test"
 
 initializeEnvironment(this, env.PROJECT_NAME)
 
-env.WORKSPACE = getWorkspace()
-
-echo "${env.WORKSPACE}"
-
-env.PROJECT_PATH = new URI(env.WORKSPACE, ["UnityProject"].join("/")).normalize().toString()
-
-echo "${env.PROJECT_PATH}"
-
-env.BUILD_SCRIPT_DIRECTORY_PATH = new URI([env.PROJECT_PATH, "../BuildScripts"].join("/")).normalize().toString() 
-
-echo "${env.BUILD_SCRIPT_DIRECTORY_PATH}"
-
 env.BRANCH_TYPE = getBranchType(env.BRANCH_NAME)
 env.DEPLOYMENT_ENVIRONMENT = getBranchDeploymentEnvironment(env.BRANCH_TYPE)
 env.CLIENT_CONFIG = getClientConfig(env.DEPLOYMENT_ENVIRONMENT)
@@ -109,7 +97,18 @@ def buildPlatform(String platform, def platform_serials ) {
     // Some jobs must be executed exclusively on a dedicated node of jenkins
     node(labels) {
         // Some nodes store the job workspace (and the UE4 installed build) in a different directory
-        env.WORKSPACE = getWorkspace()
+        
+	env.WORKSPACE = getWorkspace()
+	
+	echo "${env.WORKSPACE}"
+	
+	env.PROJECT_PATH = new URI(env.WORKSPACE, ["UnityProject"].join("/")).normalize().toString()
+	
+	echo "${env.PROJECT_PATH}"
+	
+	env.BUILD_SCRIPT_DIRECTORY_PATH = new URI([env.PROJECT_PATH, "../BuildScripts"].join("/")).normalize().toString() 
+	
+	echo "${env.BUILD_SCRIPT_DIRECTORY_PATH}"
 
         ws(env.WORKSPACE) {
 
