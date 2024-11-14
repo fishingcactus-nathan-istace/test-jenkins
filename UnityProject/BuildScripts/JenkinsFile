@@ -127,10 +127,12 @@ def buildPlatform(String platform, def platform_serials ) {
                 if (params.CACHE_SERVER_IP != "" && params.CACHE_SERVER_IP != null) {
                     base_arguments += ', "CacheServerIPAddress ' + params.CACHE_SERVER_IP + '"'
                 }
+
+                echo base_arguments
                 
                 String unity_install_path = activateUnityLicense( serial, base_arguments )
 
-echo unity_install_path 
+                echo unity_install_path 
 
                 buildCookRun( platform, env.BUILD_FOLDER, unity_install_path, base_arguments )
                 archiveBuild( platform, env.BUILD_FOLDER )
