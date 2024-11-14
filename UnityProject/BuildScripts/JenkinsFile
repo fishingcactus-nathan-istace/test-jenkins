@@ -119,6 +119,8 @@ def buildPlatform(String platform, def platform_serials ) {
                     serial = platform_serials[ platform ]
                 }
 
+                echo serial
+
                 String base_arguments = '"silent-crashes", "accept-apiupdate", '
                 base_arguments += ' "buildTarget ' + platform + '", '
                 base_arguments += ' "projectPath ' + getProjectFolder() + '"'
